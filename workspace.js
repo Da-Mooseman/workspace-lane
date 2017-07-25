@@ -205,6 +205,25 @@ cpdefine("inline:com-chilipeppr-workspace-lane", ["chilipeppr_ready"], function(
          * Load the workspace menu and show the pubsubviewer and fork links using
          * our pubsubviewer widget that makes those links for us.
          */
+        // Inject new div to contain widget or use an existing div with an ID
+$("body").append('<' + 'div id="myDivWidgetCam"><' + '/div>');
+
+chilipeppr.load(
+  "#myDivWidgetCam",
+  "http://raw.githubusercontent.com/chilipeppr/widget-cam/master/auto-generated-widget.html",
+  function() {
+    // Callback after widget loaded into #myDivWidgetCam
+    // Now use require.js to get reference to instantiated widget
+    cprequire(
+      ["inline:com-chilipeppr-widget-cam"], // the id you gave your widget
+      function(myObjWidgetCam) {
+        // Callback that is passed reference to the newly loaded widget
+        console.log("Widget / Cam just got loaded.", myObjWidgetCam);
+        myObjWidgetCam.init();
+      }
+    );
+  }
+);
         loadWorkspaceMenu: function(callback) {
             // Workspace Menu with Workspace Billboard
             var that = this;
